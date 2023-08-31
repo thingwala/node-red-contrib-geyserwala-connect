@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    RED.nodes.registerType('lowpower enable', {
+        category: 'geyserwala',
+        defaults: {
+            name: { value: "Low Power Enable" },
+            geyserwalaConnector: { type: "geyserwala-connector", required: true },
+        },
+        inputs: 1,
+        outputs: 1,
+        color: "#2AAED7",
+        icon: "font-awesome/fa-stop-circle-o",
+        label: function () {
+            return this.name;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="lowpower enable">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-geyserwalaConnector"><i class="fa fa-link"></i> Geyserwala</label>
+        <input type="text" id="node-input-geyserwalaConnector">
+    </div>
+</script>

@@ -1,0 +1,97 @@
+<script type="text/javascript">
+    // https://fontawesome.com/v4/icons/
+    RED.nodes.registerType('geyserwala-connector', {
+        category: 'config',
+        defaults: {
+            name: { value: "Geyserwala", required: true },
+
+            api: { value: "MQTT", requred: true },
+
+            mqttBroker: { type: "mqtt-broker" },
+            mqttTopicTemplate: { value: "geyserwala/%prefix%/%mac%" },
+            mqttTopicMac: { value: "" },
+            mqttTopicIp: { value: "" },
+            mqttTopicHostname: { value: "" },
+
+            restHost: { value: "" },
+            restPort: { value: 80 },
+            restUser: { value: "admin" },
+            restPassword: { value: "" },
+            restPollInterval: { value: 3 },
+        },
+        label: function () {
+            return this.name;
+        }
+    });
+
+    function showConfigFields(value) {
+        document.getElementById('config-api-mqtt').style.display = (value == 'MQTT' ? "" : "none");
+        document.getElementById('config-api-rest').style.display = (value == 'REST' ? "" : "none");
+    }
+
+</script>
+
+<script type="text/x-red" data-template-name="geyserwala-connector">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-api"><i class="fa fa-link"></i> API</label>
+        <select id="node-config-input-api" style="width:20%;" onchange="showConfigFields(this.value)">
+            <option value="MQTT">MQTT</option>
+            <option value="REST">REST</option>
+        </select>
+    </div>
+
+    <fieldset id="config-api-mqtt">
+        <legend>MQTT Configuration</legend>
+        <div class="form-row">
+            <label for="node-config-input-mqttBroker"><i class="fa fa-server"></i> Broker</label>
+            <input type="text" id="node-config-input-mqttBroker">
+        </div>
+        <div class="form-row">
+            <label for="node-config-input-mqttTopicTemplate"><i class="fa fa-code"></i> Topic Template</label>
+            <input type="text" id="node-config-input-mqttTopicTemplate" placeholder="geyserwala/%prefix%/%mac%" pattern="^[a-zA-Z\d%\/]{1,80}?$">
+        </div>
+        <div style="border: 1px solid #ccc; border-radius: 5px; padding: 10px">
+            <div class="form-row">
+                <label for="node-config-input-mqttTopicMac"><i class="fa fa-ticket"></i> MAC</label>
+                <input type="text" id="node-config-input-mqttTopicMac" style="width:30%;" placeholder="EFCDAB214365" pattern="^[A-F\d]{12}?$">
+            </div>
+            <div class="form-row">
+                <label for="node-config-input-mqttTopicIp"><i class="fa fa-ticket"></i> IP</label>
+                <input type="text" id="node-config-input-mqttTopicIp" style="width:50%;" placeholder="192.168.1.5" pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$">
+            </div>
+            <div class="form-row">
+                <label for="node-config-input-mqttTopicHostname"><i class="fa fa-ticket"></i> Hostname</label>
+                <input type="text" id="node-config-input-mqttTopicHostname" style="width:50%;" placeholder="geyserwala" pattern="^[A-F\d]{1,80}?$">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset id="config-api-rest">
+        <legend>REST Configuration</legend>
+
+        <div class="form-row">
+            <label for="node-config-input-restHost"><i class="fa fa-server"></i> Host</label>
+            <input type="text" id="node-config-input-restHost" placeholder="192.168.1.5" pattern="^[a-zA-Z\d-.]?$">
+        </div>
+        <div class="form-row">
+            <label for="node-config-input-restPort"><i class="fa fa-dot-circle-o"></i> Port</label>
+            <input type="number" id="node-config-input-restPort" style="width:20%;" placeholder="80" min=80 max=65535>
+        </div>
+        <div class="form-row">
+            <label for="node-config-input-restUser"><i class="fa fa-user"></i> User</label>
+            <input type="text" id="node-config-input-restUser" style="width:40%;" placeholder="admin">
+        </div>
+        <div class="form-row">
+            <label for="node-config-input-restPassword"><i class="fa fa-key"></i> Password</label>
+            <input type="password" id="node-config-input-restPassword" style="width:40%;" placeholder="">
+        </div>
+        <div class="form-row">
+            <label for="node-config-input-restPollInterval"><i class="fa fa-hourglass-o"></i> Poll Interval</label>
+            <input type="number" id="node-config-input-restPollInterval" style="width:20%;" placeholder="3" min=1 max=60>
+        </div>
+    </fieldset>
+</script>
