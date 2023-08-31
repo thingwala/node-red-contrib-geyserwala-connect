@@ -1,17 +1,20 @@
 setup:
 	node -v
 	npm -v
-	npm install -g --unsafe-perm node-red
-	npm link
+	mkdir -p .node-red && \
+	cd .node-red && \
+	npm init -y && \
+	npm install node-red && \
+	npm install mqtt && \
+	cd  node_modules && \
+	ln -sf ../.. node-red-contrib-geyserwala-connect
 
 dev:
-	mkdir -p .node-red
-	cd .node-red
-	npm install mqtt
-	npm link node-red-contrib-geyserwala-connect
+	cd .node-red && \
+	npx node-red
 
-run:
-	cd .node-red
-	npm link
-	mkdir -p .config
-	node-red --userDir .config
+login:
+	npm login
+
+publish:
+	npm publish

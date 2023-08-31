@@ -1,6 +1,8 @@
 class GeyserwalaConnectorMqtt {
-    constructor(broker, template, mac, ip, hostname) {
+    constructor(broker, pubQos, retain, template, mac, ip, hostname) {
         this.broker = broker
+        this.pubQos = pubQos
+        this.retain = retain
         this.template = template.replace('%mac%', mac || 'MAC').replace('%ip%', ip || 'IP').replace('%hostname%', hostname || 'HOSTNAME')
         this.subscriptions = {}
         this.nodes = []
@@ -107,8 +109,11 @@ class GeyserwalaConnectorMqtt {
         } else {
             payload = String(value)
         }
-
-        this.broker.client.publish(this.pubTopic(key), payload, (err) => {
+        const options = {
+            qos: this.pubQos,
+            retain: this.retain,
+        };
+        this.broker.client.publish(this.pubTopic(key), payload, options, (err) => {
             if (err) {
                 console.error("Failed to publish to MQTT: " + err.toString(), msg);
             }

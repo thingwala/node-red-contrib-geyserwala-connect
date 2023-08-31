@@ -1,37 +1,37 @@
 module.exports = {
-    registerType: function (RED, name, key, type, input) {
+    createNode: function (RED, valueKey, type, input) {
         function Node(config) {
             RED.nodes.createNode(this, config);
 
-            var geyserwalaConnector = RED.nodes.getNode(config.geyserwalaConnector)
-            if (!geyserwalaConnector) {
+            var geyserwalaApi = RED.nodes.getNode(config.geyserwalaApi)
+            if (!geyserwalaApi) {
                 this.error('Connector not configured')
                 return
             }
-            this.api = geyserwalaConnector.api;
-            if (!geyserwalaConnector.api) {
+            this.api = geyserwalaApi.api;
+            if (!geyserwalaApi.api) {
                 this.error('Invalid API')
                 return
             }
 
             this.api.registerNode(this)
 
-            this.api.subscribe(key, type, (payload) => {
+            this.api.subscribe(valueKey, type, (payload) => {
                 try {
-                    this.send({ topic: key, payload: payload })
+                    this.send({ topic: valueKey, payload: payload })
                 } catch (error) {
                     console.error(error.message);
                 }
             });
             this.on('close', () => {
-                this.api.unsubscribe(key);
+                this.api.unsubscribe(valueKey);
                 this.api.unregister(this);
             });
 
             if (input) {
                 this.on('input', function (message) {
                     try {
-                        this.api.send(key, message.payload)
+                        this.api.send(valueKey, message.payload)
                     } catch (error) {
                         console.error(error.message);
                     }
@@ -42,6 +42,6 @@ module.exports = {
             });
         }
 
-        RED.nodes.registerType(name, Node);
-    },
+        RED.nodes.registerType(`geyserwala-connect-${valueKey}`, Node);
+    }
 }

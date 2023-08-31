@@ -1,13 +1,36 @@
 <script type="text/javascript">
+    function geyserwalaRegisterType(nodeType, nodeLabel, icon, input) {
+        RED.nodes.registerType(nodeType, {
+            category: 'Geyserwala',
+            paletteLabel: nodeLabel,
+            defaults: {
+                name: { value: nodeLabel },
+                geyserwalaApi: { type: "geyserwala-connect-api", required: true },
+            },
+            inputs: input ? 1 : 0,
+            outputs: 1,
+            color: "#2AAED7",
+            icon: icon,
+            label: function () {
+                return this.name;
+            }
+        });
+    }
+</script>
+    
+<script type="text/javascript">
     // https://fontawesome.com/v4/icons/
-    RED.nodes.registerType('geyserwala-connector', {
+    RED.nodes.registerType('geyserwala-connect-api', {
         category: 'config',
+        paletteLabel: 'Geyserwala Connector',
         defaults: {
             name: { value: "Geyserwala", required: true },
 
             api: { value: "MQTT", requred: true },
 
             mqttBroker: { type: "mqtt-broker" },
+            mqttPubQos: { value: 0 },
+            mqttRetain: { value: false },
             mqttTopicTemplate: { value: "geyserwala/%prefix%/%mac%" },
             mqttTopicMac: { value: "" },
             mqttTopicIp: { value: "" },
@@ -31,7 +54,7 @@
 
 </script>
 
-<script type="text/x-red" data-template-name="geyserwala-connector">
+<script type="text/x-red" data-template-name="geyserwala-connect-api">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
@@ -51,6 +74,25 @@
             <input type="text" id="node-config-input-mqttBroker">
         </div>
         <div class="form-row">
+<!-- 
+            <div class="form-row-column">
+                <label for="node-config-input-mqttPubQos"><i class="fa fa-exclamation"></i> QoS</label>
+                <select id="node-config-input-mqttPubQos" style="width:30%;">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="form-row-column">
+                <label for="node-config-input-mqttRetain"><i class="fa fa-sticky-note-o"></i> Retain</label>
+                <select id="node-config-input-mqttRetain" style="width:30%;">
+                    <option value="0">false</option>
+                    <option value="1">true</option>
+                </select>
+            </div>
+ -->
+        </div>
+        <div class="form-row">
             <label for="node-config-input-mqttTopicTemplate"><i class="fa fa-code"></i> Topic Template</label>
             <input type="text" id="node-config-input-mqttTopicTemplate" placeholder="geyserwala/%prefix%/%mac%" pattern="^[a-zA-Z\d%\/]{1,80}?$">
         </div>
@@ -68,6 +110,7 @@
                 <input type="text" id="node-config-input-mqttTopicHostname" style="width:50%;" placeholder="geyserwala" pattern="^[A-F\d]{1,80}?$">
             </div>
         </div>
+    
     </fieldset>
 
     <fieldset id="config-api-rest">
@@ -94,4 +137,13 @@
             <input type="number" id="node-config-input-restPollInterval" style="width:20%;" placeholder="3" min=1 max=60>
         </div>
     </fieldset>
+    <style>
+        .form-row {
+            display: flex;
+        }
+        .form-row-column {
+            flex: 1;
+            margin-right: 10px;
+        }
+    </style>
 </script>

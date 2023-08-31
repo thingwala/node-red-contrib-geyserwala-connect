@@ -1,6 +1,4 @@
 .node-red/
-node_modules/
-.config*
 
 # Logs
 logs
