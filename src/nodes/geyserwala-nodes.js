@@ -1,5 +1,5 @@
-module.exports = {
-    createNode: function (RED, valueKey, type, input) {
+module.exports = function (RED) {
+    function createNode (valueKey, type, input) {
         function Node(config) {
             RED.nodes.createNode(this, config);
 
@@ -10,7 +10,7 @@ module.exports = {
             }
             this.api = geyserwalaApi.api;
             if (!geyserwalaApi.api) {
-                this.error('Invalid API')
+                this.error('Invalid Connector')
                 return
             }
 
@@ -20,7 +20,7 @@ module.exports = {
                 try {
                     this.send({ topic: valueKey, payload: payload })
                 } catch (error) {
-                    console.error(error.message);
+                    RED.log.error(`{Geyserwala Connect} Outputing: ${error.message}`);
                 }
             });
             this.on('close', () => {
@@ -33,7 +33,7 @@ module.exports = {
                     try {
                         this.api.send(valueKey, message.payload)
                     } catch (error) {
-                        console.error(error.message);
+                        RED.log.error(`{Geyserwala Connect} Sending: ${error.message}`);
                     }
                 })
             }
@@ -44,4 +44,19 @@ module.exports = {
 
         RED.nodes.registerType(`geyserwala-connect-${valueKey}`, Node);
     }
+
+    createNode('tank-temp', Number, false);
+    createNode('element-demand', Boolean, false);
+
+    createNode('lowpower-enable', Boolean, true);
+    createNode('external-demand', Boolean, true);
+    createNode('external-setpoint', Number, true);
+
+    createNode('status', String, false);
+    createNode('mode', String, true);
+    createNode('setpoint', Number, true);
+    createNode('boost-demand', Boolean, true);
+
+    createNode('collector-temp', Number, false);
+    createNode('pump-status', Boolean, false);
 }

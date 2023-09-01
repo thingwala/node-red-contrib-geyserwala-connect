@@ -1,25 +1,4 @@
 <script type="text/javascript">
-    function geyserwalaRegisterType(nodeType, nodeLabel, icon, input) {
-        RED.nodes.registerType(nodeType, {
-            category: 'Geyserwala',
-            paletteLabel: nodeLabel,
-            defaults: {
-                name: { value: nodeLabel },
-                geyserwalaApi: { type: "geyserwala-connect-api", required: true },
-            },
-            inputs: input ? 1 : 0,
-            outputs: 1,
-            color: "#2AAED7",
-            icon: icon,
-            label: function () {
-                return this.name;
-            }
-        });
-    }
-</script>
-    
-<script type="text/javascript">
-    // https://fontawesome.com/v4/icons/
     RED.nodes.registerType('geyserwala-connect-api', {
         category: 'config',
         paletteLabel: 'Geyserwala Connector',
@@ -55,6 +34,9 @@
 </script>
 
 <script type="text/x-red" data-template-name="geyserwala-connect-api">
+    <div class="form-row">
+        <h4>Geyserwala Connect : API Connector</h4>
+    </div>
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
@@ -92,22 +74,28 @@
             </div>
  -->
         </div>
-        <div class="form-row">
-            <label for="node-config-input-mqttTopicTemplate"><i class="fa fa-code"></i> Topic Template</label>
-            <input type="text" id="node-config-input-mqttTopicTemplate" placeholder="geyserwala/%prefix%/%mac%" pattern="^[a-zA-Z\d%\/]{1,80}?$">
-        </div>
-        <div style="border: 1px solid #ccc; border-radius: 5px; padding: 10px">
+        <div style="border: 1px solid #ccc; border-radius: 5px; padding: 10px 5px 5px 10px">
             <div class="form-row">
-                <label for="node-config-input-mqttTopicMac"><i class="fa fa-ticket"></i> MAC</label>
+                <label for="node-config-input-mqttTopicTemplate"><i class="fa fa-code"></i> Topic Template</label>
+                <input type="text" id="node-config-input-mqttTopicTemplate" placeholder="geyserwala/%prefix%/%mac%" pattern="^[a-zA-Z\d%\/]{1,80}?$">
+            </div>
+                <h4>Tokens</h4>
+                <p>These take the form of <b>%name%</b>, see <a href="https://github.com/thingwala/geyserwala-connect/blob/main/docs/MQTT.md" target="_blank">the docs</a>.
+            <div class="form-row">
+                <label for="node-config-input-mqttTopicMac"><i class="fa fa-ticket"></i>&nbsp;prefix</label>
+                <p>Required: will be either <b>stat</b> or <b>cmnd</b></p>.
+            </div>
+            <div class="form-row">
+                <label for="node-config-input-mqttTopicMac"><i class="fa fa-ticket"></i>&nbsp;mac</label>
                 <input type="text" id="node-config-input-mqttTopicMac" style="width:30%;" placeholder="EFCDAB214365" pattern="^[A-F\d]{12}?$">
             </div>
             <div class="form-row">
-                <label for="node-config-input-mqttTopicIp"><i class="fa fa-ticket"></i> IP</label>
-                <input type="text" id="node-config-input-mqttTopicIp" style="width:50%;" placeholder="192.168.1.5" pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$">
+                <label for="node-config-input-mqttTopicIp"><i class="fa fa-ticket"></i>&nbsp;ip</label>
+                <input type="text" id="node-config-input-mqttTopicIp" style="width:40%;" placeholder="192.168.1.5" pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$">
             </div>
             <div class="form-row">
-                <label for="node-config-input-mqttTopicHostname"><i class="fa fa-ticket"></i> Hostname</label>
-                <input type="text" id="node-config-input-mqttTopicHostname" style="width:50%;" placeholder="geyserwala" pattern="^[A-F\d]{1,80}?$">
+                <label for="node-config-input-mqttTopicHostname"><i class="fa fa-ticket"></i>&nbsp;hostname</label>
+                <input type="text" id="node-config-input-mqttTopicHostname" style="width:40%;" placeholder="geyserwala" pattern="^[A-F\d]{1,80}?$">
             </div>
         </div>
     
@@ -118,11 +106,11 @@
 
         <div class="form-row">
             <label for="node-config-input-restHost"><i class="fa fa-server"></i> Host</label>
-            <input type="text" id="node-config-input-restHost" placeholder="192.168.1.5" pattern="^[a-zA-Z\d-.]?$">
+            <input type="text" id="node-config-input-restHost" placeholder="192.168.1.5">
         </div>
         <div class="form-row">
             <label for="node-config-input-restPort"><i class="fa fa-dot-circle-o"></i> Port</label>
-            <input type="number" id="node-config-input-restPort" style="width:20%;" placeholder="80" min=80 max=65535>
+            <input type="number" id="node-config-input-restPort" style="width:15%;" placeholder="80" min=1 max=65535>
         </div>
         <div class="form-row">
             <label for="node-config-input-restUser"><i class="fa fa-user"></i> User</label>
@@ -134,7 +122,7 @@
         </div>
         <div class="form-row">
             <label for="node-config-input-restPollInterval"><i class="fa fa-hourglass-o"></i> Poll Interval</label>
-            <input type="number" id="node-config-input-restPollInterval" style="width:20%;" placeholder="3" min=1 max=60>
+            <input type="number" id="node-config-input-restPollInterval" style="width:15%;" placeholder="3" min=1 max=300><span>&nbsp;seconds</span>
         </div>
     </fieldset>
     <style>

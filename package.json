@@ -1,31 +1,27 @@
 {
     "name": "node-red-contrib-geyserwala-connect",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Node-RED nodes for the Geyserwala Connect",
     "author": "Thingwala",
     "license": "MIT",
+    "homepage": "https://www.thingwala.com/geyserwala/connect",
+    "url" : "https://github.com/thingwala/node-red-contrib-geyserwala-connect/issues",
     "dependencies": {
         "mqtt": "^4.3.7"
     },
     "node-red": {
+        "version": ">=3.0.2",
         "nodes": {
-            "api": "src/service/geyserwala-api.js",
-            "tank-temp": "src/nodes/tank-temp.js",
-            "element-demand": "src/nodes/element-demand.js",
-            "external-setpoint": "src/nodes/external-setpoint.js",
-            "external-demand": "src/nodes/external-demand.js",
-            "lowpower-enable": "src/nodes/lowpower-enable.js",
-            "mode": "src/nodes/mode.js",
-            "setpoint": "src/nodes/setpoint.js",
-            "boost-demand": "src/nodes/boost-demand.js",
-            "collector-temp": "src/nodes/collector-temp.js",
-            "pump-status": "src/nodes/pump-status.js"
+            "api": "src/nodes/geyserwala-api.js",
+            "nodes": "src/nodes/geyserwala-nodes.js"
         }
     },
     "keywords": [
         "node-red",
-        "geyserwise",
-        "geyserwala",
-        "thingwala"
-    ]
+        "thingwala",
+        "geyserwala"
+    ],
+    "engines": {
+        "node": ">=16.0.0"
+    }
 }

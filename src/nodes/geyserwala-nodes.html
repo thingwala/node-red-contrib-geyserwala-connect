@@ -1,0 +1,60 @@
+<script type="text/template" id="node-input-template">
+    <div class="form-row">
+        <h4 id="title"></h4>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-geyserwalaApi"><i class="fa fa-link"></i> Geyserwala</label>
+        <input type="text" id="node-input-geyserwalaApi">
+    </div>
+</script>
+
+<script type="text/javascript">
+    function addInputDialog(valueKey, nodeLabel) {
+        var nodeInput = $("#node-input-template").clone().html();
+
+        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${valueKey}`).append(nodeInput);
+        scriptTag.find('#title').text(`Geyserwala Connect : ${nodeLabel}`);
+        $('body').append(scriptTag.prop('outerHTML'));
+    }
+
+    function registerType(valueKey, nodeLabel, icon, input) {
+        addInputDialog(valueKey, nodeLabel)
+
+        RED.nodes.registerType(`geyserwala-connect-${valueKey}`, {
+            category: 'Geyserwala Connect',
+            paletteLabel: nodeLabel,
+            defaults: {
+                name: { value: nodeLabel },
+                geyserwalaApi: { type: "geyserwala-connect-api", required: true },
+            },
+            inputs: input ? 1 : 0,
+            outputs: 1,
+            color: "#2AAED7",
+            icon: icon,
+            label: function () {
+                return this.name;
+            }
+        });
+    }
+
+    // Icons: https://fontawesome.com/v4/icons/
+    registerType('tank-temp', "Tank Temp", "font-awesome/fa-thermometer-half", false);
+    registerType('element-demand', "Element Demand", "font-awesome/fa-fire", false);
+
+    registerType('lowpower-enable', "Low Power Enable", "font-awesome/fa-stop-circle-o", true);
+    registerType('external-demand', "External Demand", "serial.png", true);
+    registerType('external-setpoint', "External Setpoint", "inject.png", true);
+
+    registerType('status', "Status", "font-awesome/fa-envelope-o", true);
+    registerType('mode', "Mode", "font-awesome/fa-info", true);
+    registerType('setpoint', "Setpoint", "inject.png", true);
+    registerType('boost-demand', "Boost Demand", "font-awesome/fa-power-off", true);
+
+    registerType('collector-temp', "Collector Temp", "font-awesome/fa-thermometer-half", false);
+    registerType('pump-status', "Pump Status", "font-awesome/fa-recycle", false);
+
+</script>

@@ -6,7 +6,7 @@ module.exports = function (RED) {
         if (config.api == 'MQTT') {
             const GeyserwalaConnectorMqtt = require('./geyserwala-api-mqtt');
 
-            this.api = new GeyserwalaConnectorMqtt(
+            this.api = new GeyserwalaConnectorMqtt(RED,
                 RED.nodes.getNode(config.mqttBroker),
                 config.mqttPubQos,
                 config.mqttRetain,
@@ -18,7 +18,7 @@ module.exports = function (RED) {
         } else if (config.api == "REST") {
             const GeyserwalaConnectorRest = require('./geyserwala-api-rest');
 
-            this.api = new GeyserwalaConnectorRest(
+            this.api = new GeyserwalaConnectorRest(RED,
                 config.restHost,
                 config.restPort,
                 config.restUser,

@@ -1,5 +1,6 @@
 class GeyserwalaConnectorMqtt {
-    constructor(broker, pubQos, retain, template, mac, ip, hostname) {
+    constructor(RED, broker, pubQos, retain, template, mac, ip, hostname) {
+        this.RED = RED
         this.broker = broker
         this.pubQos = pubQos
         this.retain = retain
@@ -26,7 +27,7 @@ class GeyserwalaConnectorMqtt {
                 try {
                     this.subscriptions[topic](payload)
                 } catch (error) {
-                    console.error(error.message);
+                    this.RED.log.error(`{Geyserwala Connect} Handling subscription: ${error.message}`);
                 }
             });
 
@@ -44,11 +45,11 @@ class GeyserwalaConnectorMqtt {
 
             this.broker.client.on("error", (error) => {
                 this.status({ fill: "red", shape: "ring", text: "error" });
-                console.error("MQTT Error:", error);
+                this.RED.log.error(`{Geyserwala Connect} MQTT error: ${error}`);
             });
         } else {
             this.status({ fill: "red", shape: "ring", text: "no broker" });
-            console.error("No broker configuration found!");
+            this.RED.log.error(`{Geyserwala Connect} No MQTT broker configuration found!`);
         }
     }
     subTopic(key) {
@@ -60,7 +61,7 @@ class GeyserwalaConnectorMqtt {
     subscribeTopic(topic) {
         this.broker.client.subscribe(topic, (err) => {
             if (err) {
-                console.error("Error subscribing to topic:", err);
+                this.RED.log.error(`{Geyserwala Connect} Subscribing to topic: ${topic}: ${err}`);
             }
         });
     }
@@ -115,7 +116,7 @@ class GeyserwalaConnectorMqtt {
         };
         this.broker.client.publish(this.pubTopic(key), payload, options, (err) => {
             if (err) {
-                console.error("Failed to publish to MQTT: " + err.toString(), msg);
+                this.RED.log.error(`{Geyserwala Connect} Publishing to MQTT: ${err}`);
             }
         });
     }

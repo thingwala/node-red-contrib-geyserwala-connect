@@ -1,0 +1,606 @@
+[
+    {
+        "id": "fc2acf2da9d1682c",
+        "type": "tab",
+        "label": "Geyserwala Connect",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "85b616590e17a12c",
+        "type": "geyserwala-connect-tank-temp",
+        "z": "fc2acf2da9d1682c",
+        "name": "Tank Temp",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 380,
+        "y": 60,
+        "wires": [
+            [
+                "691616a2e1b3365d"
+            ]
+        ]
+    },
+    {
+        "id": "c5e8c4ce98d9e562",
+        "type": "geyserwala-connect-element-demand",
+        "z": "fc2acf2da9d1682c",
+        "name": "Element Demand",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "691616a2e1b3365d"
+            ]
+        ]
+    },
+    {
+        "id": "5b6755e03df7cf61",
+        "type": "geyserwala-connect-collector-temp",
+        "z": "fc2acf2da9d1682c",
+        "name": "Collector Temp",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 360,
+        "y": 140,
+        "wires": [
+            [
+                "691616a2e1b3365d"
+            ]
+        ]
+    },
+    {
+        "id": "dee0237bdf6d3fe6",
+        "type": "geyserwala-connect-pump-status",
+        "z": "fc2acf2da9d1682c",
+        "name": "Pump Status",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "691616a2e1b3365d"
+            ]
+        ]
+    },
+    {
+        "id": "691616a2e1b3365d",
+        "type": "debug",
+        "z": "fc2acf2da9d1682c",
+        "name": "info",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b159a980e9ca5816",
+        "type": "geyserwala-connect-external-demand",
+        "z": "fc2acf2da9d1682c",
+        "name": "External Demand",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "cf52f2f9a6713b72"
+            ]
+        ]
+    },
+    {
+        "id": "4d7df3d6c919b539",
+        "type": "geyserwala-connect-external-setpoint",
+        "z": "fc2acf2da9d1682c",
+        "name": "External Setpoint",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "cf52f2f9a6713b72"
+            ]
+        ]
+    },
+    {
+        "id": "b3c9c5848fbafd71",
+        "type": "geyserwala-connect-mode",
+        "z": "fc2acf2da9d1682c",
+        "name": "Mode",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 390,
+        "y": 580,
+        "wires": [
+            [
+                "1d89d48c14b6c3b8"
+            ]
+        ]
+    },
+    {
+        "id": "ca4f27161c7f81fa",
+        "type": "geyserwala-connect-setpoint",
+        "z": "fc2acf2da9d1682c",
+        "name": "Setpoint",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "1d89d48c14b6c3b8"
+            ]
+        ]
+    },
+    {
+        "id": "94191a9675df61af",
+        "type": "geyserwala-connect-boost-demand",
+        "z": "fc2acf2da9d1682c",
+        "name": "Boost Demand",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 360,
+        "y": 700,
+        "wires": [
+            [
+                "1d89d48c14b6c3b8"
+            ]
+        ]
+    },
+    {
+        "id": "fcdc172bc333981b",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "fba9a6ea6ed3f0cb"
+            ]
+        ]
+    },
+    {
+        "id": "7555b33894ed93a8",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "fba9a6ea6ed3f0cb"
+            ]
+        ]
+    },
+    {
+        "id": "d25e9b6a0b51b3ff",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "b159a980e9ca5816"
+            ]
+        ]
+    },
+    {
+        "id": "1cec7d550f31e5e1",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "b159a980e9ca5816"
+            ]
+        ]
+    },
+    {
+        "id": "e20fe185478f4007",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "35",
+        "payloadType": "num",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "4d7df3d6c919b539"
+            ]
+        ]
+    },
+    {
+        "id": "9b096ff0a428f394",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "60",
+        "payloadType": "num",
+        "x": 110,
+        "y": 460,
+        "wires": [
+            [
+                "4d7df3d6c919b539"
+            ]
+        ]
+    },
+    {
+        "id": "b084411925aad05a",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "SOLAR",
+        "payloadType": "str",
+        "x": 110,
+        "y": 520,
+        "wires": [
+            [
+                "b3c9c5848fbafd71"
+            ]
+        ]
+    },
+    {
+        "id": "f9c9c0f43fd44dae",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "TIMER",
+        "payloadType": "str",
+        "x": 110,
+        "y": 560,
+        "wires": [
+            [
+                "b3c9c5848fbafd71"
+            ]
+        ]
+    },
+    {
+        "id": "cf52f2f9a6713b72",
+        "type": "debug",
+        "z": "fc2acf2da9d1682c",
+        "name": "automation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "1d89d48c14b6c3b8",
+        "type": "debug",
+        "z": "fc2acf2da9d1682c",
+        "name": "manual",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "c19e8851fc0cbf79",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "48",
+        "payloadType": "num",
+        "x": 110,
+        "y": 620,
+        "wires": [
+            [
+                "ca4f27161c7f81fa"
+            ]
+        ]
+    },
+    {
+        "id": "669942032c75c052",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "55",
+        "payloadType": "num",
+        "x": 110,
+        "y": 660,
+        "wires": [
+            [
+                "ca4f27161c7f81fa"
+            ]
+        ]
+    },
+    {
+        "id": "2a1072fd3a5c4f1f",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 720,
+        "wires": [
+            [
+                "94191a9675df61af"
+            ]
+        ]
+    },
+    {
+        "id": "6ba37de220dc855b",
+        "type": "inject",
+        "z": "fc2acf2da9d1682c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 760,
+        "wires": [
+            [
+                "94191a9675df61af"
+            ]
+        ]
+    },
+    {
+        "id": "70e5994a789dd73b",
+        "type": "geyserwala-connect-status",
+        "z": "fc2acf2da9d1682c",
+        "name": "Status",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 390,
+        "y": 20,
+        "wires": [
+            [
+                "691616a2e1b3365d"
+            ]
+        ]
+    },
+    {
+        "id": "fba9a6ea6ed3f0cb",
+        "type": "geyserwala-connect-lowpower-enable",
+        "z": "fc2acf2da9d1682c",
+        "name": "Low Power Enable",
+        "geyserwalaApi": "db6794008ea04dea",
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "cf52f2f9a6713b72"
+            ]
+        ]
+    },
+    {
+        "id": "db6794008ea04dea",
+        "type": "geyserwala-connect-api",
+        "name": "Geyserwala Connector",
+        "api": "MQTT",
+        "mqttBroker": "2f8be320790a3c93",
+        "mqttTopicTemplate": "geyserwala/%prefix%/%mac%",
+        "mqttTopicMac": "EFCDAB214365",
+        "mqttTopicIp": "",
+        "mqttTopicHostname": "",
+        "restHost": "192.168.1.55",
+        "restPort": "80",
+        "restUser": "admin",
+        "restPassword": "",
+        "restPollInterval": "3"
+    },
+    {
+        "id": "2f8be320790a3c93",
+        "type": "mqtt-broker",
+        "name": "MQTT Broker",
+        "broker": "192.168.1.5",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

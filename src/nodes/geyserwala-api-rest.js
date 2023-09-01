@@ -1,7 +1,8 @@
 const http = require('http');
 
 class GeyserwalaConnectorRest {
-    constructor(host, port, user, password, pollInterval) {
+    constructor(RED, host, port, user, password, pollInterval) {
+        this.RED = RED
         this.host = host
         this.port = port
         this.user = user
@@ -109,7 +110,7 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();
             },
             (error) => {
-                console.error(`Poll error: ${error.message}`);
+                this.RED.log.error(`{Geyserwala Connect} Authing: ${error.message}`);
                 this.statusOffline(error.message);
                 this.startPollingWithBackoff();
             }
@@ -137,7 +138,7 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();    
             },
             (error) => {
-                console.error(`Poll error: ${error.message}`);
+                // this.RED.log.error(`{Geyserwala Connect} Polling: ${error.message}`);
                 this.statusOffline(error.message);
                 this.startPollingWithBackoff();
             }
@@ -149,7 +150,6 @@ class GeyserwalaConnectorRest {
             '/api/value',
             { [key]: value },
             (status, blob) => {
-                // console.info(`Patch resp: ${status}`, blob);
                 if (status == 200) {
                     this.updateValues(blob)
                     this.statusOnline()
@@ -160,7 +160,7 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();
             },
             (error) => {
-                console.error(`Patch error: ${error.message}`);
+                this.RED.log.error(`{Geyserwala Connect} Patching: ${error.message}`);
                 this.statusOffline(error.message);
                 this.startPollingWithBackoff();
             }
@@ -202,17 +202,17 @@ class GeyserwalaConnectorRest {
                     success(res.statusCode, blob)
                 }
                 catch(error) {
-                    console.error(error.message)
+                    this.RED.log.error(`{Geyserwala Connect} Request failed: ${error.message}`)
                     fail(error);
                 }
             });
         });
         this.req.setTimeout(10000, () => {
             this.req.abort();
-            fail({message: "Rquest timed out"});
+            fail({message: "Request timed out"});
         });
         this.req.on('abort', () => {
-            console.info('Request aborted.');
+            // console.debug('Request aborted.');
         });
         this.req.on('error', (error) => {
             this.req = null;
