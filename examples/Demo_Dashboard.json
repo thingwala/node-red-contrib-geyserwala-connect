@@ -2,7 +2,7 @@
     {
         "id": "342b690c66a49a1f",
         "type": "tab",
-        "label": "Geyserwala Connect [basic]",
+        "label": "Geyserwala Connect [dashboard]",
         "disabled": false,
         "info": "",
         "env": []
@@ -29,7 +29,10 @@
             "5bc9b1b86a61efb2",
             "7d4c7fe9eccbec97",
             "7d60d88d4dd76836",
-            "4def969791c09e83"
+            "4def969791c09e83",
+            "e0d6f670e7b417d9",
+            "c9c28c0a5003d2fa",
+            "bcad36c6a02c193e"
         ],
         "x": 34,
         "y": 759,
@@ -57,11 +60,16 @@
             "e9b8430f5597469b",
             "e5d5f46380175be6",
             "6d56c063d96db256",
-            "38a6c9613261e7a0"
+            "8eb8e4b31a8fea94",
+            "539e86d6a8fa761b",
+            "6f4ba77ed2c002fd",
+            "38a6c9613261e7a0",
+            "d26af93414f3e809",
+            "a2d2172ca7366012"
         ],
         "x": 28,
         "y": 379,
-        "w": 938,
+        "w": 978,
         "h": 362
     },
     {
@@ -80,11 +88,17 @@
             "b4767375b92bdd57",
             "750c5d181752e102",
             "7d99d17546632c01",
-            "102aa69255cc662b"
+            "102aa69255cc662b",
+            "593a7f19403fa30a",
+            "ced61d8e62aeae2c",
+            "23b2cd1a659ff5d0",
+            "2a999929b83e8c2b",
+            "e467e6a4c46b9e33",
+            "4e474389ca05f767"
         ],
         "x": 454,
         "y": 19,
-        "w": 472,
+        "w": 552,
         "h": 342
     },
     {
@@ -110,53 +124,6 @@
         "h": 222
     },
     {
-        "id": "11149d0082218c50",
-        "type": "geyserwala-connect-api",
-        "name": "Geyserwala Connector",
-        "api": "MQTT",
-        "mqttBroker": "655be97ebf33d7ca",
-        "mqttTopicTemplate": "geyserwala/%prefix%/%mac%",
-        "mqttTopicMac": "08B61F74144C",
-        "mqttTopicIp": "",
-        "mqttTopicHostname": "",
-        "restHost": "10.0.0.51",
-        "restPort": "80",
-        "restUser": "admin",
-        "restPassword": "",
-        "restPollInterval": "1"
-    },
-    {
-        "id": "655be97ebf33d7ca",
-        "type": "mqtt-broker",
-        "name": "Geyserwala MQTT",
-        "broker": "10.0.0.5",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
         "id": "ec73a53a3d4dcd1a",
         "type": "geyserwala-connect-tank-temp",
         "z": "342b690c66a49a1f",
@@ -167,7 +134,9 @@
         "y": 120,
         "wires": [
             [
-                "7d99d17546632c01"
+                "7d99d17546632c01",
+                "ced61d8e62aeae2c",
+                "4e474389ca05f767"
             ]
         ]
     },
@@ -182,7 +151,8 @@
         "y": 160,
         "wires": [
             [
-                "7d99d17546632c01"
+                "7d99d17546632c01",
+                "23b2cd1a659ff5d0"
             ]
         ]
     },
@@ -197,7 +167,9 @@
         "y": 220,
         "wires": [
             [
-                "7d99d17546632c01"
+                "7d99d17546632c01",
+                "e467e6a4c46b9e33",
+                "4e474389ca05f767"
             ]
         ]
     },
@@ -212,7 +184,8 @@
         "y": 260,
         "wires": [
             [
-                "7d99d17546632c01"
+                "7d99d17546632c01",
+                "2a999929b83e8c2b"
             ]
         ]
     },
@@ -245,7 +218,8 @@
         "y": 520,
         "wires": [
             [
-                "7cd36f80c05870f8"
+                "7cd36f80c05870f8",
+                "d26af93414f3e809"
             ]
         ]
     },
@@ -260,7 +234,8 @@
         "y": 420,
         "wires": [
             [
-                "7cd36f80c05870f8"
+                "7cd36f80c05870f8",
+                "6f4ba77ed2c002fd"
             ]
         ]
     },
@@ -275,7 +250,8 @@
         "y": 800,
         "wires": [
             [
-                "cad4f2f6b5739a4e"
+                "cad4f2f6b5739a4e",
+                "bcad36c6a02c193e"
             ]
         ]
     },
@@ -290,7 +266,8 @@
         "y": 900,
         "wires": [
             [
-                "cad4f2f6b5739a4e"
+                "cad4f2f6b5739a4e",
+                "e0d6f670e7b417d9"
             ]
         ]
     },
@@ -305,7 +282,8 @@
         "y": 1000,
         "wires": [
             [
-                "cad4f2f6b5739a4e"
+                "cad4f2f6b5739a4e",
+                "c9c28c0a5003d2fa"
             ]
         ]
     },
@@ -716,7 +694,8 @@
         "y": 60,
         "wires": [
             [
-                "7d99d17546632c01"
+                "7d99d17546632c01",
+                "593a7f19403fa30a"
             ]
         ]
     },
@@ -731,7 +710,8 @@
         "y": 620,
         "wires": [
             [
-                "7cd36f80c05870f8"
+                "7cd36f80c05870f8",
+                "a2d2172ca7366012"
             ]
         ]
     },
@@ -914,5 +894,532 @@
                 "d9298ac91820ff63"
             ]
         ]
+    },
+    {
+        "id": "593a7f19403fa30a",
+        "type": "ui_text",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "group": "371765cc99203bae",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 770,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "ced61d8e62aeae2c",
+        "type": "ui_gauge",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "name": "",
+        "group": "371765cc99203bae",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Tank",
+        "label": "°C",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "95",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 770,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "23b2cd1a659ff5d0",
+        "type": "ui_led",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "order": 3,
+        "group": "371765cc99203bae",
+        "width": 0,
+        "height": 0,
+        "label": "Element",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#888888",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ff0000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": false,
+        "name": "Element",
+        "x": 780,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e0d6f670e7b417d9",
+        "type": "ui_slider",
+        "z": "342b690c66a49a1f",
+        "g": "426f6d2cfa6f581a",
+        "name": "",
+        "label": "Setpoint",
+        "tooltip": "",
+        "group": "d1233a563158db60",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "35",
+        "max": "65",
+        "step": 1,
+        "className": "",
+        "x": 800,
+        "y": 900,
+        "wires": [
+            [
+                "4ae8c3665001f199"
+            ]
+        ]
+    },
+    {
+        "id": "2a999929b83e8c2b",
+        "type": "ui_led",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "order": 5,
+        "group": "371765cc99203bae",
+        "width": "0",
+        "height": "0",
+        "label": "Pump",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#888888",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#0fe60f",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": false,
+        "name": "Pump",
+        "x": 770,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c9c28c0a5003d2fa",
+        "type": "ui_switch",
+        "z": "342b690c66a49a1f",
+        "g": "426f6d2cfa6f581a",
+        "name": "",
+        "label": "Boost",
+        "tooltip": "",
+        "group": "d1233a563158db60",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 790,
+        "y": 1000,
+        "wires": [
+            [
+                "4053bcadb088d843"
+            ]
+        ]
+    },
+    {
+        "id": "bcad36c6a02c193e",
+        "type": "ui_dropdown",
+        "z": "342b690c66a49a1f",
+        "g": "426f6d2cfa6f581a",
+        "name": "",
+        "label": "Mode",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d1233a563158db60",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "HOLIDAY",
+                "value": "HOLIDAY",
+                "type": "str"
+            },
+            {
+                "label": "STANDBY",
+                "value": "STANDBY",
+                "type": "str"
+            },
+            {
+                "label": "SOLAR",
+                "value": "SOLAR",
+                "type": "str"
+            },
+            {
+                "label": "TIMER",
+                "value": "TIMER",
+                "type": "str"
+            },
+            {
+                "label": "SETPOINT",
+                "value": "SETPOINT",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 790,
+        "y": 800,
+        "wires": [
+            [
+                "d9298ac91820ff63"
+            ]
+        ]
+    },
+    {
+        "id": "8eb8e4b31a8fea94",
+        "type": "ui_switch",
+        "z": "342b690c66a49a1f",
+        "g": "a295d5b28a06dc5b",
+        "name": "",
+        "label": "Ext Disable",
+        "tooltip": "",
+        "group": "222039cc150b0a07",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 910,
+        "y": 620,
+        "wires": [
+            [
+                "e9b8430f5597469b"
+            ]
+        ]
+    },
+    {
+        "id": "539e86d6a8fa761b",
+        "type": "ui_switch",
+        "z": "342b690c66a49a1f",
+        "g": "a295d5b28a06dc5b",
+        "name": "",
+        "label": "Ext Demand",
+        "tooltip": "",
+        "group": "222039cc150b0a07",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 910,
+        "y": 520,
+        "wires": [
+            [
+                "4428c8e39e339619"
+            ]
+        ]
+    },
+    {
+        "id": "6f4ba77ed2c002fd",
+        "type": "ui_slider",
+        "z": "342b690c66a49a1f",
+        "g": "a295d5b28a06dc5b",
+        "name": "",
+        "label": "Ext Setpoint",
+        "tooltip": "",
+        "group": "222039cc150b0a07",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "35",
+        "max": "75",
+        "step": 1,
+        "className": "",
+        "x": 910,
+        "y": 420,
+        "wires": [
+            [
+                "c2d2c4bb0957bee2"
+            ]
+        ]
+    },
+    {
+        "id": "e467e6a4c46b9e33",
+        "type": "ui_text",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "group": "371765cc99203bae",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Collector",
+        "label": "Collector",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 780,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4e474389ca05f767",
+        "type": "ui_chart",
+        "z": "342b690c66a49a1f",
+        "g": "24a4e95ec2b29bde",
+        "name": "Timeline",
+        "group": "371765cc99203bae",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "label": "Timeline",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff7f28",
+            "#be27aa",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 920,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d26af93414f3e809",
+        "type": "function",
+        "z": "342b690c66a49a1f",
+        "g": "a295d5b28a06dc5b",
+        "name": "bool",
+        "func": "msg.payload = (msg.payload != 0)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 520,
+        "wires": [
+            [
+                "539e86d6a8fa761b"
+            ]
+        ]
+    },
+    {
+        "id": "a2d2172ca7366012",
+        "type": "function",
+        "z": "342b690c66a49a1f",
+        "g": "a295d5b28a06dc5b",
+        "name": "bool",
+        "func": "msg.payload = (msg.payload != 0)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 620,
+        "wires": [
+            [
+                "8eb8e4b31a8fea94"
+            ]
+        ]
+    },
+    {
+        "id": "11149d0082218c50",
+        "type": "geyserwala-connect-api",
+        "name": "Geyserwala Connector",
+        "api": "MQTT",
+        "mqttBroker": "655be97ebf33d7ca",
+        "mqttTopicTemplate": "geyserwala/%prefix%/%mac%",
+        "mqttTopicMac": "08B61F74144C",
+        "mqttTopicIp": "",
+        "mqttTopicHostname": "",
+        "restHost": "10.0.0.51",
+        "restPort": "80",
+        "restUser": "admin",
+        "restPassword": "",
+        "restPollInterval": "1"
+    },
+    {
+        "id": "371765cc99203bae",
+        "type": "ui_group",
+        "name": "Status",
+        "tab": "6f87adb2fe2c7522",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d1233a563158db60",
+        "type": "ui_group",
+        "name": "Manual",
+        "tab": "6f87adb2fe2c7522",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "222039cc150b0a07",
+        "type": "ui_group",
+        "name": "Automation",
+        "tab": "6f87adb2fe2c7522",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "655be97ebf33d7ca",
+        "type": "mqtt-broker",
+        "name": "Geyserwala MQTT",
+        "broker": "10.0.0.5",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "6f87adb2fe2c7522",
+        "type": "ui_tab",
+        "name": "Geyserwala",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]

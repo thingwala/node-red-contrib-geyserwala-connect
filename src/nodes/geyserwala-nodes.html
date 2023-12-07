@@ -33,7 +33,7 @@
             },
             inputs: input ? 1 : 0,
             outputs: 1,
-            color: "#2AAED7",
+            color: "#00A9E0",
             icon: icon,
             label: function () {
                 return this.name;
@@ -42,15 +42,16 @@
     }
 
     // Icons: https://fontawesome.com/v4/icons/
+    registerType('status', "Status", "font-awesome/fa-envelope-o", false);
+    registerType('mode', "Mode", "font-awesome/fa-info", true);
+
     registerType('tank-temp', "Tank Temp", "font-awesome/fa-thermometer-half", false);
     registerType('element-demand', "Element Demand", "font-awesome/fa-fire", false);
 
-    registerType('lowpower-enable', "Low Power Enable", "font-awesome/fa-stop-circle-o", true);
-    registerType('external-demand', "External Demand", "serial.png", true);
     registerType('external-setpoint', "External Setpoint", "inject.png", true);
+    registerType('external-demand', "External Demand", "serial.png", true);
+    registerType('external-disable', "External Disable", "font-awesome/fa-stop-circle-o", true);
 
-    registerType('status', "Status", "font-awesome/fa-envelope-o", true);
-    registerType('mode', "Mode", "font-awesome/fa-info", true);
     registerType('setpoint', "Setpoint", "inject.png", true);
     registerType('boost-demand', "Boost Demand", "font-awesome/fa-power-off", true);
 

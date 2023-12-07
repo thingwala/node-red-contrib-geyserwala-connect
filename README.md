@@ -3,14 +3,6 @@ Geyserwala Connect - Node-RED Integration <!-- omit in toc -->
 
 ***Automate your Geyserwala Connect from Node-RED***
 
-## Installation
-
-Install `node-red-contrib-geyserwala-connect` using [npm](https://www.npmjs.com/):
-
-```bash
-npm install --save node-red-contrib-geyserwala-connect
-```
-
 ## Usage
 
 Use these nodes to integrate with your Geyserwala Connect to automate your Geyserwise system from Node-RED.

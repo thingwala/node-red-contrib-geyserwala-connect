@@ -48,9 +48,9 @@ module.exports = function (RED) {
     createNode('tank-temp', Number, false);
     createNode('element-demand', Boolean, false);
 
-    createNode('lowpower-enable', Boolean, true);
-    createNode('external-demand', Boolean, true);
     createNode('external-setpoint', Number, true);
+    createNode('external-demand', Number, true);
+    createNode('external-disable', Number, true);
 
     createNode('status', String, false);
     createNode('mode', String, true);
