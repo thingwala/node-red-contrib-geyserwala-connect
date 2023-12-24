@@ -7,7 +7,7 @@
 
             api: { value: "MQTT", requred: true },
 
-            mqttBroker: { type: "mqtt-broker" },
+            mqttBroker: { type: "mqtt-broker", required: false },
             mqttPubQos: { value: 0 },
             mqttRetain: { value: false },
             mqttTopicTemplate: { value: "geyserwala/%prefix%/%mac%" },

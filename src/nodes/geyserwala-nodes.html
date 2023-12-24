@@ -12,24 +12,52 @@
     </div>
 </script>
 
+<script type="text/template" id="node-input-value-template">
+    <fieldset id="node-input-value">
+        <legend>Value</legend>
+        <div class="form-row">
+            <label for="node-input-valueType"><i class="fa fa-cube"></i> Type</label>
+            <select id="node-input-valueType" style="width:25%;">
+                <option value="">Undefined</option>
+                <option value="Boolean">Boolean</option>
+                <option value="Number">Number</option>
+                <option value="String">String</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-valueKey"><i class="fa fa-hashtag"></i> Key</label>
+            <input type="text" id="node-input-valueKey" placeholder="Key">
+        </div>
+    </fieldset>
+</script>
+
+
 <script type="text/javascript">
-    function addInputDialog(valueKey, nodeLabel) {
+    function addInputDialog(nodeKey, nodeLabel, valueType) {
         var nodeInput = $("#node-input-template").clone().html();
 
-        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${valueKey}`).append(nodeInput);
+        if (nodeKey.startsWith('custom-')) {
+            var nodeInputValue = $("#node-input-value-template").clone().html();
+            console.log(typeof nodeInput)
+            nodeInput += nodeInputValue
+        }
+
+        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${nodeKey}`).append(nodeInput);
         scriptTag.find('#title').text(`Geyserwala Connect : ${nodeLabel}`);
         $('body').append(scriptTag.prop('outerHTML'));
     }
 
-    function registerType(valueKey, nodeLabel, icon, input) {
-        addInputDialog(valueKey, nodeLabel)
+    function registerType(nodeKey, nodeLabel, valueType, icon, input) {
+        addInputDialog(nodeKey, nodeLabel, valueType)
 
-        RED.nodes.registerType(`geyserwala-connect-${valueKey}`, {
+        RED.nodes.registerType(`geyserwala-connect-${nodeKey}`, {
             category: 'Geyserwala Connect',
             paletteLabel: nodeLabel,
             defaults: {
                 name: { value: nodeLabel },
                 geyserwalaApi: { type: "geyserwala-connect-api", required: true },
+                valueKey: { value: nodeKey.startsWith('custom-') ? "" : nodeKey, required: true },
+                valueType: { value: valueType ? valueType.name: "", required: true},
             },
             inputs: input ? 1 : 0,
             outputs: 1,
@@ -42,20 +70,21 @@
     }
 
     // Icons: https://fontawesome.com/v4/icons/
-    registerType('status', "Status", "font-awesome/fa-envelope-o", false);
-    registerType('mode', "Mode", "font-awesome/fa-info", true);
+    registerType('status', "Status", String, "font-awesome/fa-envelope-o", false);
+    registerType('mode', "Mode", String, "font-awesome/fa-sliders", true);
 
-    registerType('tank-temp', "Tank Temp", "font-awesome/fa-thermometer-half", false);
-    registerType('element-demand', "Element Demand", "font-awesome/fa-fire", false);
+    registerType('tank-temp', "Tank Temp", Number, "font-awesome/fa-thermometer-half", false);
+    registerType('element-demand', "Element Demand", Boolean, "font-awesome/fa-fire", false);
 
-    registerType('external-setpoint', "External Setpoint", "inject.png", true);
-    registerType('external-demand', "External Demand", "serial.png", true);
-    registerType('external-disable', "External Disable", "font-awesome/fa-stop-circle-o", true);
+    registerType('external-setpoint', "External Setpoint", Number, "inject.png", true);
+    registerType('external-demand', "External Demand", Number, "serial.png", true);
+    registerType('external-disable', "External Disable", Number, "font-awesome/fa-stop-circle-o", true);
 
-    registerType('setpoint', "Setpoint", "inject.png", true);
-    registerType('boost-demand', "Boost Demand", "font-awesome/fa-power-off", true);
+    registerType('setpoint', "Setpoint", Number, "inject.png", true);
+    registerType('boost-demand', "Boost Demand", Boolean, "font-awesome/fa-power-off", true);
 
-    registerType('collector-temp', "Collector Temp", "font-awesome/fa-thermometer-half", false);
-    registerType('pump-status', "Pump Status", "font-awesome/fa-recycle", false);
+    registerType('collector-temp', "Collector Temp", Number, "font-awesome/fa-thermometer-half", false);
+    registerType('pump-status', "Pump Status", Boolean, "font-awesome/fa-recycle", false);
 
+    registerType('custom-io', "Custom", null, "font-awesome/fa-cogs", true);
 </script>

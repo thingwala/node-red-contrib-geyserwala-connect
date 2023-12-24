@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-    function createNode (valueKey, type, input) {
+    function createNode (nodeKey) {
         function Node(config) {
             RED.nodes.createNode(this, config);
 
@@ -16,7 +16,15 @@ module.exports = function (RED) {
 
             this.api.registerNode(this)
 
-            this.api.subscribe(valueKey, type, (payload) => {
+            const valueKey = config.valueKey
+            const valueType = {
+                "": Number,
+                "Boolean": Boolean,
+                "Number": Number,
+                "String": String,
+            }[config.valueType]
+
+            this.api.subscribe(valueKey, valueType, (payload) => {
                 try {
                     this.send({ topic: valueKey, payload: payload })
                 } catch (error) {
@@ -28,35 +36,36 @@ module.exports = function (RED) {
                 this.api.unregister(this);
             });
 
-            if (input) {
-                this.on('input', function (message) {
-                    try {
-                        this.api.send(valueKey, message.payload)
-                    } catch (error) {
-                        RED.log.error(`{Geyserwala Connect} Sending: ${error.message}`);
-                    }
-                })
-            }
+            this.on('input', function (message) {
+                try {
+                    this.api.send(valueKey, message.payload)
+                } catch (error) {
+                    RED.log.error(`{Geyserwala Connect} Sending: ${error.message}`);
+                }
+            })
             this.on('close', function () {
                 this.api.unregister(this);
             });
         }
 
-        RED.nodes.registerType(`geyserwala-connect-${valueKey}`, Node);
+        RED.nodes.registerType(`geyserwala-connect-${nodeKey}`, Node);
     }
 
-    createNode('tank-temp', Number, false);
-    createNode('element-demand', Boolean, false);
+    createNode('status');
+    createNode('mode');
 
-    createNode('external-setpoint', Number, true);
-    createNode('external-demand', Number, true);
-    createNode('external-disable', Number, true);
+    createNode('tank-temp');
+    createNode('element-demand');
 
-    createNode('status', String, false);
-    createNode('mode', String, true);
-    createNode('setpoint', Number, true);
-    createNode('boost-demand', Boolean, true);
+    createNode('external-setpoint');
+    createNode('external-demand');
+    createNode('external-disable');
 
-    createNode('collector-temp', Number, false);
-    createNode('pump-status', Boolean, false);
+    createNode('setpoint');
+    createNode('boost-demand');
+
+    createNode('collector-temp');
+    createNode('pump-status');
+
+    createNode('custom-io');
 }

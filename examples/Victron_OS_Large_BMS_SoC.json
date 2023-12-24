@@ -1,0 +1,220 @@
+[
+    {
+        "id": "ca3352fdbb2d931a",
+        "type": "tab",
+        "label": "Geyserwala - BMS SoC",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "29a73b429a4838ca",
+        "type": "victron-input-battery",
+        "z": "ca3352fdbb2d931a",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Soc",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "SS4143   BMS-EX"
+        },
+        "pathObj": {
+            "path": "/Soc",
+            "type": "float",
+            "name": "State of charge (%)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "0399d69c01f87a48"
+            ]
+        ]
+    },
+    {
+        "id": "3d2a53f1b12d9675",
+        "type": "geyserwala-connect-external-disable",
+        "z": "ca3352fdbb2d931a",
+        "name": "External Disable",
+        "geyserwalaApi": "20dd980fafe6ca2e",
+        "x": 580,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "562e3bc5f100a612",
+        "type": "switch",
+        "z": "ca3352fdbb2d931a",
+        "name": "90%",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "90",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "90",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "d5a7a12a701ab13c"
+            ],
+            [
+                "d31b6ddda17ef2fc"
+            ]
+        ]
+    },
+    {
+        "id": "d31b6ddda17ef2fc",
+        "type": "change",
+        "z": "ca3352fdbb2d931a",
+        "name": "true",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "3d2a53f1b12d9675"
+            ]
+        ]
+    },
+    {
+        "id": "d5a7a12a701ab13c",
+        "type": "change",
+        "z": "ca3352fdbb2d931a",
+        "name": "false",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "3d2a53f1b12d9675"
+            ]
+        ]
+    },
+    {
+        "id": "0399d69c01f87a48",
+        "type": "rbe",
+        "z": "ca3352fdbb2d931a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "562e3bc5f100a612"
+            ]
+        ]
+    },
+    {
+        "id": "f1e662c9433dcab2",
+        "type": "inject",
+        "z": "ca3352fdbb2d931a",
+        "name": "true",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "3d2a53f1b12d9675"
+            ]
+        ]
+    },
+    {
+        "id": "e9867b4f5d12423a",
+        "type": "inject",
+        "z": "ca3352fdbb2d931a",
+        "name": "false",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "3d2a53f1b12d9675"
+            ]
+        ]
+    },
+    {
+        "id": "20dd980fafe6ca2e",
+        "type": "geyserwala-connect-api",
+        "name": "Geyserwala",
+        "api": "REST",
+        "mqttBroker": "",
+        "mqttTopicTemplate": "geyserwala/%prefix%/%mac%",
+        "mqttTopicMac": "",
+        "mqttTopicIp": "",
+        "mqttTopicHostname": "",
+        "restHost": "10.0.0.51",
+        "restPort": "80",
+        "restUser": "admin",
+        "restPassword": "",
+        "restPollInterval": "10"
+    }
+]
