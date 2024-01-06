@@ -1,5 +1,9 @@
 # Change Log - Geyserwala Connect - Node-RED Plugin
 
+## [0.0.6] - 2024-01-06
+
+Fix import flows from older versions
+
 ## [0.0.5] - 2023-12-20
 
 Allow for custom signals

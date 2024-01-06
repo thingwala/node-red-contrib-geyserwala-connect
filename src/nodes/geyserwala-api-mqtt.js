@@ -27,7 +27,7 @@ class GeyserwalaConnectorMqtt {
                 try {
                     this.subscriptions[topic](payload)
                 } catch (error) {
-                    this.RED.log.error(`{Geyserwala Connect} Handling subscription: ${error.message}`);
+                    this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message}`);
                 }
             });
 

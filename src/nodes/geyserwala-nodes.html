@@ -31,60 +31,110 @@
     </fieldset>
 </script>
 
-
 <script type="text/javascript">
-    function addInputDialog(nodeKey, nodeLabel, valueType) {
+    function addInputDialog(node) {
         var nodeInput = $("#node-input-template").clone().html();
 
-        if (nodeKey.startsWith('custom-')) {
+        if (node.type === null) {
             var nodeInputValue = $("#node-input-value-template").clone().html();
             console.log(typeof nodeInput)
             nodeInput += nodeInputValue
         }
 
-        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${nodeKey}`).append(nodeInput);
-        scriptTag.find('#title').text(`Geyserwala Connect : ${nodeLabel}`);
+        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${node.key}`).append(nodeInput);
+        scriptTag.find('#title').text(`Geyserwala Connect : ${node.name}`);
         $('body').append(scriptTag.prop('outerHTML'));
     }
 
-    function registerType(nodeKey, nodeLabel, valueType, icon, input) {
-        addInputDialog(nodeKey, nodeLabel, valueType)
+    function _registerNode(node) {
+        addInputDialog(node)
 
-        RED.nodes.registerType(`geyserwala-connect-${nodeKey}`, {
+        RED.nodes.registerType(`geyserwala-connect-${node.key}`, {
             category: 'Geyserwala Connect',
-            paletteLabel: nodeLabel,
+            paletteLabel: node.name,
             defaults: {
-                name: { value: nodeLabel },
+                name: { value: node.name },
                 geyserwalaApi: { type: "geyserwala-connect-api", required: true },
-                valueKey: { value: nodeKey.startsWith('custom-') ? "" : nodeKey, required: true },
-                valueType: { value: valueType ? valueType.name: "", required: true},
+                valueKey: { value: undefined },
+                valueType: { value: undefined },
             },
-            inputs: input ? 1 : 0,
+            inputs: node.input ? 1 : 0,
             outputs: 1,
             color: "#00A9E0",
-            icon: icon,
+            icon: node.icon,
             label: function () {
                 return this.name;
             }
         });
     }
 
+    function registerNode(key, name, type, icon, input) {
+        _registerNode({key: key, name: name, type: type, icon: icon, input: input})
+    }
+
     // Icons: https://fontawesome.com/v4/icons/
-    registerType('status', "Status", String, "font-awesome/fa-envelope-o", false);
-    registerType('mode', "Mode", String, "font-awesome/fa-sliders", true);
+    registerNode("status", "Status", String, "font-awesome/fa-envelope-o", false)
+    registerNode("mode", "Mode", String, "font-awesome/fa-sliders", true)
+    registerNode("tank-temp", "Tank Temp", Number, "font-awesome/fa-thermometer-half", false)
+    registerNode("element-demand", "Element Demand", Boolean, "font-awesome/fa-fire", false)
+    registerNode("external-setpoint", "External Setpoint", Number, "inject.png", true)
+    registerNode("external-demand", "External Demand", Number, "serial.png", true)
+    registerNode("external-disable", "External Disable", Number, "font-awesome/fa-stop-circle-o", true)
+    registerNode("setpoint", "Setpoint", Number, "inject.png", true)
+    registerNode("boost-demand", "Boost Demand", Boolean, "font-awesome/fa-power-off", true)
+    registerNode("collector-temp", "Collector Temp", Number, "font-awesome/fa-thermometer-half", false)
+    registerNode("pump-status", "Pump Status", Boolean, "font-awesome/fa-recycle", false)
+    registerNode("custom-io", "Custom", null, "font-awesome/fa-cogs", true)
+</script>
 
-    registerType('tank-temp', "Tank Temp", Number, "font-awesome/fa-thermometer-half", false);
-    registerType('element-demand', "Element Demand", Boolean, "font-awesome/fa-fire", false);
+<script type="text/x-red" data-help-name="geyserwala-connect-status">
+    <p></p>
+</script>
 
-    registerType('external-setpoint', "External Setpoint", Number, "inject.png", true);
-    registerType('external-demand', "External Demand", Number, "serial.png", true);
-    registerType('external-disable', "External Disable", Number, "font-awesome/fa-stop-circle-o", true);
+<script type="text/x-red" data-help-name="geyserwala-connect-mode">
+    <p></p>
+</script>
 
-    registerType('setpoint', "Setpoint", Number, "inject.png", true);
-    registerType('boost-demand', "Boost Demand", Boolean, "font-awesome/fa-power-off", true);
+<script type="text/x-red" data-help-name="geyserwala-connect-tank-temp">
+    <p></p>
+</script>
 
-    registerType('collector-temp', "Collector Temp", Number, "font-awesome/fa-thermometer-half", false);
-    registerType('pump-status', "Pump Status", Boolean, "font-awesome/fa-recycle", false);
+<script type="text/x-red" data-help-name="geyserwala-connect-element-demand">
+    <p></p>
+</script>
 
-    registerType('custom-io', "Custom", null, "font-awesome/fa-cogs", true);
+<script type="text/x-red" data-help-name="geyserwala-connect-element-demand">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-external-setpoint">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-external-demand">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-external-disable">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-setpoint">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-boost-demand">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-collector-temp">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-pump-status">
+    <p></p>
+</script>
+
+<script type="text/x-red" data-help-name="geyserwala-connect-custom-io">
+    <p></p>
 </script>
