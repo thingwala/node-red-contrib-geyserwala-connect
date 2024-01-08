@@ -1,6 +1,6 @@
 {
     "name": "@thingwala/node-red-contrib-geyserwala-connect",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Node-RED nodes for the Geyserwala Connect",
     "author": "Thingwala",
     "license": "MIT",

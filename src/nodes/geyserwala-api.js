@@ -1,10 +1,10 @@
 
 module.exports = function (RED) {
-    class Node {
+    class GeyserwalaConnectApi {
         constructor (config) {
             RED.nodes.createNode(this, config);
 
-            if (config.api == 'MQTT') {
+            if (config.api == "MQTT") {
                 const GeyserwalaConnectorMqtt = require('./geyserwala-api-mqtt');
 
                 this.api = new GeyserwalaConnectorMqtt(RED,
@@ -26,8 +26,16 @@ module.exports = function (RED) {
                     config.restPassword,
                     config.restPollInterval,
                 )
+            } else {
+                this.warn(`Unsupported API type "${config.api}"`)
             }
+
+            this.on('close', () => {
+                this.api.close()
+                delete this.api
+                this.api = null
+            });
         }
     }
-    RED.nodes.registerType("geyserwala-connect-api", Node);
+    RED.nodes.registerType("geyserwala-connect-api", GeyserwalaConnectApi);
 };

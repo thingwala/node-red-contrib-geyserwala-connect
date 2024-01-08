@@ -5,8 +5,8 @@ class GeyserwalaConnectorMqtt {
         this.pubQos = pubQos
         this.retain = retain
         this.template = template.replace('%mac%', mac || 'MAC').replace('%ip%', ip || 'IP').replace('%hostname%', hostname || 'HOSTNAME')
-        this.subscriptions = {}
         this.nodes = []
+        this.subscriptions = {}
 
         if (this.broker && !this.broker.client) {
             this.broker.connect(() => {
@@ -17,40 +17,57 @@ class GeyserwalaConnectorMqtt {
         }
     }
     setupBrokerEvents() {
-        if (this.broker && this.broker.client) {
-
-            this.status({ fill: "green", shape: "dot", text: "connected" });
-            for (const topic in this.subscriptions) {
-                this.subscribeTopic(topic)
-            }
-            this.broker.client.on("message", (topic, payload) => {
-                try {
-                    this.subscriptions[topic](payload)
-                } catch (error) {
-                    this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message}`);
-                }
-            });
-
-            this.broker.client.on("reconnect", () => {
-                this.status({ fill: "yellow", shape: "ring", text: "reconnecting" });
-            });
-
-            this.broker.client.on("offline", () => {
-                this.status({ fill: "red", shape: "ring", text: "offline" });
-            });
-
-            this.broker.client.on("close", () => {
-                this.status({ fill: "red", shape: "ring", text: "disconnected" });
-            });
-
-            this.broker.client.on("error", (error) => {
-                this.status({ fill: "red", shape: "ring", text: "error" });
-                this.RED.log.error(`{Geyserwala Connect} MQTT error: ${error}`);
-            });
-        } else {
-            this.status({ fill: "red", shape: "ring", text: "no broker" });
+        if (!this.broker || !this.broker.client) {
+            setTimeout(()=>{
+                this.status({ fill: "grey", shape: "ring", text: "invalid mqtt broker" });
+            }, 0);
             this.RED.log.error(`{Geyserwala Connect} No MQTT broker configuration found!`);
+            return
         }
+
+        this.status({ fill: "green", shape: "dot", text: "connected" });
+        for (const topic in this.subscriptions) {
+            this.subscribeTopic(topic)
+        }
+
+        this.broker.client.on("message", (topic, payload) => {
+            if (!this.subscriptions[topic]) {
+                return
+            }
+            const msg = payload.toString()
+            for (const node of this.subscriptions[topic]) {
+                try {
+                    let value
+                    if (node.valueType === Number) {
+                        value = parseInt(msg)
+                    } else if (node.valueType === Boolean) {
+                        value = msg == 'ON'
+                    } else {
+                        value = String(msg)
+                    }
+                    node.onValue(value)
+                } catch (error) {
+                    this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message} [${topic}] "${msg}"`);
+                }
+            }
+        });
+
+        this.broker.client.on("reconnect", () => {
+            this.status({ fill: "yellow", shape: "ring", text: "reconnecting" });
+        });
+
+        this.broker.client.on("offline", () => {
+            this.status({ fill: "red", shape: "ring", text: "offline" });
+        });
+
+        this.broker.client.on("close", () => {
+            this.status({ fill: "red", shape: "ring", text: "disconnected" });
+        });
+
+        this.broker.client.on("error", (error) => {
+            this.status({ fill: "red", shape: "ring", text: "error" });
+            this.RED.log.error(`{Geyserwala Connect} MQTT error: ${error}`);
+        });
     }
     subTopic(key) {
         return this.template.replace('%prefix%', 'stat') + `/${key}`;
@@ -65,38 +82,32 @@ class GeyserwalaConnectorMqtt {
             }
         });
     }
-    subscribe(key, type, onValue) {
-        let topic = this.subTopic(key)
-        this.subscriptions[topic] = (payload) => {
-            let msg = payload.toString()
-            let value
-            if (type === Number) {
-                value = parseInt(msg)
-            } else if (type === Boolean) {
-                value = msg == 'ON'
-            } else {
-                value = String(msg)
-            }
-            onValue(value)
-        }
-
-        if (this.broker && this.broker.client) {
-            this.subscribeTopic(topic)
-        }
-    }
-    unsubscribe(key) {
-        let topic = this.subTopic(key)
-
-        delete this.subscriptions[topic]
+    unsubscribeTopic(topic) {
         this.broker.client.unsubscribe(topic)
     }
-    registerNode(node) {
+    hookNode(node) {
         this.nodes.push(node)
+        this.updateSubscriptions()
     }
-    unregisterNode(node) {
-        this.nodes = this.nodes.filter((item) => {
-            return item !== node
-        })
+    unhookAllNodes() {
+        for (const node in this.nodes) {
+            node.status({ fill: "grey", shape: "ring", text: "disconnected" });
+            this.nodes = []
+            for(const topic in this.subscriptions) {
+                this.unsubscribe(topic)
+            }
+            this.subscriptions = {}
+        }
+    }
+    updateSubscriptions() {
+        this.subscriptions = {}
+        for (const node of this.nodes) {
+            const topic = this.subTopic(node.valueKey)
+            if (this.subscriptions[topic] === undefined) {
+                this.subscriptions[topic] = []
+            }
+            this.subscriptions[topic].push(node)
+        }
     }
     status(blob) {
         for (const node of this.nodes) {
@@ -119,6 +130,10 @@ class GeyserwalaConnectorMqtt {
                 this.RED.log.error(`{Geyserwala Connect} Publishing to MQTT: ${err}`);
             }
         });
+    }
+    close() {
+        this.unhookAllNodes()
+        this.broker = null
     }
 }
 

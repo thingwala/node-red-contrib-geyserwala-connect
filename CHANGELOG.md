@@ -1,5 +1,9 @@
 # Change Log - Geyserwala Connect - Node-RED Plugin
 
+## [0.0.7] - 2024-01-08
+
+Improved error handling
+
 ## [0.0.6] - 2024-01-06
 
 Fix import flows from older versions

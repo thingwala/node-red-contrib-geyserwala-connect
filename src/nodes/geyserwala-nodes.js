@@ -1,58 +1,59 @@
 module.exports = function (RED) {
     function _registerNode (node) {
-        class Node {
+        class GeyserwalaConnectNode {
             constructor (config) {
                 RED.nodes.createNode(this, config);
 
-                var geyserwalaApi = RED.nodes.getNode(config.geyserwalaApi)
-                if (!geyserwalaApi) {
-                    this.error('Configured connector invalid')
-                    return
-                }
-                this.api = geyserwalaApi.api;
-                if (!geyserwalaApi.api) {
-                    this.error('Connector not defined')
-                    return
-                }
-
-                this.api.registerNode(this)
-
-                const valueKey = node.type ? node.key :  config.valueKey
-                const valueType = node.type ? node.type : {
+                this.valueKey = node.type ? node.key :  config.valueKey
+                this.valueType = node.type ? node.type : {
                     "": String,
                     "Boolean": Boolean,
                     "Number": Number,
                     "String": String,
                 }[config.valueType]
 
-                this.api.subscribe(valueKey, valueType, (payload) => {
-                    try {
-                        this.send({ topic: valueKey, payload: payload })
-                    } catch (error) {
-                        this.error(`Receiving "${valueKey}": ${error.message}`);
-                    }
-                });
-
-                this.on('close', () => {
-                    this.api.unsubscribe(node.valueKey);
-                    this.api.unregister(this);
-                });
+                var geyserwalaApi = RED.nodes.getNode(config.geyserwalaApi)
+                if (!geyserwalaApi) {
+                    setTimeout(()=>{
+                        this.status({fill:"grey", shape:"ring", text:"no api connector"});
+                    }, 0);
+                    return
+                }
+                this.api = geyserwalaApi.api;
+                if (!geyserwalaApi.api) {
+                    setTimeout(()=>{
+                        this.status({fill:"grey", shape:"ring", text:"invalid api connector"});
+                    }, 0);
+                    return
+                }
 
                 this.on('input', function (message) {
                     try {
-                        this.api.send(valueKey, message.payload)
+                        this.api.send(this.valueKey, message.payload)
                     } catch (error) {
-                        this.error(`Sending "${valueKey}": ${error.message}`);
+                        this.error(`Sending "${this.valueKey}": ${error.message}`);
                     }
                 })
 
-                this.on('close', function () {
+                this.on('close', (done) => {
+                    this.api.unhookNode(this);
+                    this.api.unsubscribe(node.valueKey);
                     this.api.unregister(this);
+                    done()
                 });
+
+                this.api.hookNode(this)
+            }
+            onValue(payload) {
+                try {
+                    this.send({ topic: this.valueKey, payload: payload })
+                } catch (error) {
+                    this.error(`Receiving "${valueKey}": ${error.message}`);
+                }
             }
         }
 
-        RED.nodes.registerType(`geyserwala-connect-${node.key}`, Node);
+        RED.nodes.registerType(`geyserwala-connect-${node.key}`, GeyserwalaConnectNode);
     }
 
     function registerNode(key, name, type, icon, input) {

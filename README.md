@@ -5,7 +5,7 @@ Geyserwala Connect - Node-RED Integration <!-- omit in toc -->
 
 ## Usage
 
-Use these nodes to integrate with your Geyserwala Connect to automate your Geyserwise system from Node-RED.
+Use these nodes to integrate with your Geyserwala Connect to automate your Geyserwise system from Node-RED. For more detail see the [Integration](https://www.thingwala.com/geyserwala/connect/integration) section in the manual.
 
 
 # Contribution

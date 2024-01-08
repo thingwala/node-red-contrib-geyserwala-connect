@@ -3,6 +3,7 @@ const http = require('http');
 class GeyserwalaConnectorRest {
     constructor(RED, host, port, user, password, pollInterval) {
         this.RED = RED
+        this.closed = false
         this.host = host
         this.port = port
         this.user = user
@@ -10,7 +11,6 @@ class GeyserwalaConnectorRest {
         this.req = null;
         this.pollInterval = pollInterval
         this.pollTimer = null;
-
         this.subscriptions = {}
         this.nodes = []
         this.values = {}
@@ -19,19 +19,26 @@ class GeyserwalaConnectorRest {
 
         this.startPollingWithBackoff();
     }
-    subscribe(key, type, onValue) {
-        this.subscriptions[key] = onValue;
+    hookNode(node) {
+        this.nodes.push(node)
+        this.updateSubscriptions()
     }
-    unsubscribe(key) {
-        delete this.subscriptions[key];
+    unhookAllNodes() {
+        for (const node of this.nodes) {
+            node.status({ fill: "grey", shape: "ring", text: "disconnected" });
+            this.nodes = []
+            this.subscriptions = {}
+        }
     }
-    registerNode(node) {
-        this.nodes.push(node);
-    }
-    unregisterNode(node) {
-        this.nodes = this.nodes.filter((item) => {
-            return item !== node;
-        })
+    updateSubscriptions() {
+        this.subscriptions = {}
+        for (const node of this.nodes) {
+            const key = node.valueKey
+            if (this.subscriptions[key] === undefined) {
+                this.subscriptions[key] = []
+            }
+            this.subscriptions[key].push(node)
+        }
     }
     status(blob) {
         for (const node of this.nodes) {
@@ -46,14 +53,18 @@ class GeyserwalaConnectorRest {
     }
     updateValues(blob) {
         for (const key in blob) {
-            try {
-                if (this.values[key] != blob[key]) {
-                    this.values[key] = blob[key];
-                    this.subscriptions[key](blob[key]);
+            if (this.values[key] != blob[key]) {
+                this.values[key] = blob[key];
+                if (!this.subscriptions[key]) {
+                    continue
                 }
-            }
-            catch (error) {
-                console.debug('No subscription', key);
+                for (const node of this.subscriptions[key]) {
+                    try {
+                        node.onValue(blob[key])
+                    } catch (error) {
+                        this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message} [${key}] "${blob[key]}"`);
+                    }
+                }
             }
         }
     }
@@ -110,14 +121,15 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();
             },
             (error) => {
-                this.RED.log.error(`{Geyserwala Connect} Authing: ${error.message}`);
-                this.statusOffline(error.message);
-                this.startPollingWithBackoff();
+                this.requestError('Authing', error.message);
             }
         )
     }
     poll() {
         this.stopPolling()
+        if (!Object.keys(this.subscriptions).length) {
+            return
+        }
         this.request(
             'GET',
             '/api/value?f=' + Object.keys(this.subscriptions).join(','),
@@ -138,9 +150,7 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();    
             },
             (error) => {
-                // this.RED.log.error(`{Geyserwala Connect} Polling: ${error.message}`);
-                this.statusOffline(error.message);
-                this.startPollingWithBackoff();
+                this.requestError('Polling', error.message);
             }
         )
     }
@@ -160,9 +170,7 @@ class GeyserwalaConnectorRest {
                 this.startPollingWithBackoff();
             },
             (error) => {
-                this.RED.log.error(`{Geyserwala Connect} Patching: ${error.message}`);
-                this.statusOffline(error.message);
-                this.startPollingWithBackoff();
+                this.requestError(`Patching "${key}"`, error.message);
             }
         )
     }
@@ -221,6 +229,20 @@ class GeyserwalaConnectorRest {
 
         this.req.write(requestBody);
         this.req.end();
+    }
+    requestError(action, message) {
+        if (this.closed) {
+            return
+        }
+        this.RED.log.error(`{Geyserwala Connect} ${action}: ${message}`);
+        this.statusOffline(message);
+        this.startPollingWithBackoff();
+    }
+
+    close() {
+        this.closed = true
+        this.stopPolling()
+        this.unhookAllNodes();
     }
 }
 
