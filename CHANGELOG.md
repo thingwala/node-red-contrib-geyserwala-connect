@@ -1,5 +1,9 @@
 # Change Log - Geyserwala Connect - Node-RED Plugin
 
+## [0.0.8] - 2025-02-23
+
+Fix multiple API Connector handling
+
 ## [0.0.7] - 2024-01-08
 
 Improved error handling

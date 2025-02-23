@@ -1,4 +1,3 @@
-
 module.exports = function (RED) {
     class GeyserwalaConnectApi {
         constructor (config) {
@@ -7,8 +6,24 @@ module.exports = function (RED) {
             if (config.api == "MQTT") {
                 const GeyserwalaConnectorMqtt = require('./geyserwala-api-mqtt');
 
+                let mqttBroker = RED.nodes.getNode(config.mqttBroker)
+
+                if (mqttBroker._clientAwaiter === undefined) {
+                    mqttBroker._clientAwaiter = []
+                    let _client;
+                    Object.defineProperty(mqttBroker, 'client', {
+                        get: function () { return _client; },
+                        set: function (val) {
+                            _client = val;
+                            mqttBroker._clientAwaiter.forEach(awaiter => {
+                                awaiter(val)
+                            });
+                        }
+                    });
+                }
+
                 this.api = new GeyserwalaConnectorMqtt(RED,
-                    RED.nodes.getNode(config.mqttBroker),
+                    mqttBroker,
                     config.mqttPubQos,
                     config.mqttRetain,
                     config.mqttTopicTemplate,

@@ -8,13 +8,14 @@ class GeyserwalaConnectorMqtt {
         this.nodes = []
         this.subscriptions = {}
 
-        if (this.broker && !this.broker.client) {
-            this.broker.connect(() => {
-                this.setupBrokerEvents()
-            })
-        } else {
-            this.setupBrokerEvents();
-        }
+        this.broker._clientAwaiter.push(
+            (client) => {
+                client.on('connect', () => {
+                    this.updateSubscriptions()
+                    this.setupBrokerEvents()
+                });
+            }
+        );
     }
     setupBrokerEvents() {
         if (!this.broker || !this.broker.client) {
@@ -66,7 +67,6 @@ class GeyserwalaConnectorMqtt {
 
         this.broker.client.on("error", (error) => {
             this.status({ fill: "red", shape: "ring", text: "error" });
-            this.RED.log.error(`{Geyserwala Connect} MQTT error: ${error}`);
         });
     }
     subTopic(key) {
@@ -87,17 +87,18 @@ class GeyserwalaConnectorMqtt {
     }
     hookNode(node) {
         this.nodes.push(node)
-        this.updateSubscriptions()
+        this.broker.register(node)
     }
     unhookAllNodes() {
         for (const node in this.nodes) {
-            node.status({ fill: "grey", shape: "ring", text: "disconnected" });
-            this.nodes = []
-            for(const topic in this.subscriptions) {
-                this.unsubscribe(topic)
-            }
-            this.subscriptions = {}
+            this.broker.deregister(node, ()=>{})
+            this.status({ fill: "grey", shape: "ring", text: "disconnected" });
         }
+        for(const topic in this.subscriptions) {
+            this.unsubscribeTopic(topic)
+        }
+        this.subscriptions = {}
+        this.nodes = []
     }
     updateSubscriptions() {
         this.subscriptions = {}

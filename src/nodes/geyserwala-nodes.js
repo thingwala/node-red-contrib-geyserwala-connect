@@ -12,6 +12,8 @@ module.exports = function (RED) {
                     "String": String,
                 }[config.valueType]
 
+                this.status({fill:"grey", shape:"ring", text:"initialising ..."});
+
                 var geyserwalaApi = RED.nodes.getNode(config.geyserwalaApi)
                 if (!geyserwalaApi) {
                     setTimeout(()=>{
