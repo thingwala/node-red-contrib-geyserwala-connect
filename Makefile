@@ -1,24 +1,24 @@
 setup:
 	node -v
 	npm -v
-	mkdir -p .node-red && \
-	cd .node-red && \
+	mkdir -p _node_red && \
+	cd _node_red && \
 	npm init -y && \
 	npm install node-red && \
 	npm install mqtt
 
 link:
-	cd .node-red/node_modules && \
+	cd _node_red/node_modules && \
 	ln -sf ../.. node-red-contrib-geyserwala-connect
 
 unlink:
-	rm -f .node-red/node_modules/node-red-contrib-geyserwala-connect
+	rm -f _node_red/node_modules/node-red-contrib-geyserwala-connect
 
 clean:
-	rm -rf .node-red
+	rm -rf _node_red
 
 run:
-	cd .node-red && \
+	cd _node_red && \
 	npx node-red -u .
 
 login:
