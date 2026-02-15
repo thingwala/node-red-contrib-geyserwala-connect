@@ -4,13 +4,14 @@ module.exports = function (RED) {
             constructor (config) {
                 RED.nodes.createNode(this, config);
 
-                this.valueKey = node.type ? node.key :  config.valueKey
+                this.valueKey = node.type ? node.key : config.valueKey
                 this.valueType = node.type ? node.type : {
-                    "": String,
+                    "JSON": "JSON",
                     "Boolean": Boolean,
                     "Number": Number,
                     "String": String,
                 }[config.valueType]
+                this.fullTopic = !!config.fullTopic
 
                 this.status({fill:"grey", shape:"ring", text:"initialising ..."});
 
@@ -46,9 +47,13 @@ module.exports = function (RED) {
 
                 this.api.hookNode(this)
             }
-            onValue(payload) {
+            onValue(topic, payload) {
                 try {
-                    this.send({ topic: this.valueKey, payload: payload })
+                    if (this.fullTopic) {
+                        this.send({ topic, payload })
+                    } else {
+                        this.send({ topic: this.valueKey, payload })
+                    }
                 } catch (error) {
                     this.error(`Receiving "${valueKey}": ${error.message}`);
                 }

@@ -1,5 +1,9 @@
 # Change Log - Geyserwala Connect - Node-RED Plugin
 
+## [0.0.9] - 2026-02-15
+
+Add 'Full Topic' node option
+
 ## [0.0.8] - 2025-02-23
 
 Fix multiple API Connector handling

@@ -10,6 +10,10 @@
         <label for="node-input-geyserwalaApi"><i class="fa fa-link"></i> Geyserwala</label>
         <input type="text" id="node-input-geyserwalaApi">
     </div>
+    <div class="form-row">
+        <label for="node-input-fullTopic"><i class="fa fa-hashtag"></i> Full Topic</label>
+        <input type="checkbox" id="node-input-fullTopic" style="width:auto; margin-left:6px;">
+    </div>
 </script>
 
 <script type="text/template" id="node-input-value-template">
@@ -18,7 +22,7 @@
         <div class="form-row">
             <label for="node-input-valueType"><i class="fa fa-cube"></i> Type</label>
             <select id="node-input-valueType" style="width:25%;">
-                <option value="">Undefined</option>
+                <option value="JSON">JSON</option>
                 <option value="Boolean">Boolean</option>
                 <option value="Number">Number</option>
                 <option value="String">String</option>
@@ -33,15 +37,14 @@
 
 <script type="text/javascript">
     function addInputDialog(node) {
-        var nodeInput = $("#node-input-template").clone().html();
+        var nodeInput = $("#node-input-template").clone();
 
         if (node.type === null) {
-            var nodeInputValue = $("#node-input-value-template").clone().html();
-            console.log(typeof nodeInput)
-            nodeInput += nodeInputValue
+            var nodeInputValue = $("#node-input-value-template").clone();
+            nodeInput.append(nodeInputValue.html());
         }
 
-        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${node.key}`).append(nodeInput);
+        var scriptTag = $("<script>").attr("type", "text/x-red").attr("data-template-name", `geyserwala-connect-${node.key}`).append(nodeInput.html());
         scriptTag.find('#title').text(`Geyserwala Connect : ${node.name}`);
         $('body').append(scriptTag.prop('outerHTML'));
     }
@@ -57,6 +60,7 @@
                 geyserwalaApi: { type: "geyserwala-connect-api", required: true },
                 valueKey: { value: undefined },
                 valueType: { value: undefined },
+                fullTopic: { value: false },
             },
             inputs: node.input ? 1 : 0,
             outputs: 1,

@@ -39,14 +39,16 @@ class GeyserwalaConnectorMqtt {
             for (const node of this.subscriptions[topic]) {
                 try {
                     let value
-                    if (node.valueType === Number) {
+                    if (node.valueType == 'JSON') {
+                        value = JSON.parse(msg)
+                    } else if (node.valueType === Number) {
                         value = parseInt(msg)
                     } else if (node.valueType === Boolean) {
                         value = msg == 'ON'
                     } else {
                         value = String(msg)
                     }
-                    node.onValue(value)
+                    node.onValue(topic, value)
                 } catch (error) {
                     this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message} [${topic}] "${msg}"`);
                 }
