@@ -60,7 +60,7 @@ class GeyserwalaConnectorRest {
                 }
                 for (const node of this.subscriptions[key]) {
                     try {
-                        node.onValue(blob[key])
+                        node.onValue(`${this.host}:${this.port}/${key}`, blob[key])
                     } catch (error) {
                         this.RED.log.error(`{Geyserwala Connect} Handling messsage: ${error.message} [${key}] "${blob[key]}"`);
                     }

@@ -1,5 +1,11 @@
 # Change Log - Geyserwala Connect - Node-RED Plugin
 
+## [0.0.10] - 2026-03-14
+
+### Fixed
+
+REST connector full topic handling
+
 ## [0.0.9] - 2026-02-15
 
 Add 'Full Topic' node option
